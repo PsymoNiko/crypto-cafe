@@ -1,0 +1,5 @@
+{
+  "/(app)/map/page": "app/(app)/map/page.js",
+  "/(app)/page": "app/(app)/page.js",
+  "/(app)/item/[id]/page": "app/(app)/item/[id]/page.js"
+}
