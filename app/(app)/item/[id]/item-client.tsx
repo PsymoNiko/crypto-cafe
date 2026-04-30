@@ -23,35 +23,8 @@ type Comment = {
   date: string;
 };
 
-// Example comments – replace with your actual data source
 const SAMPLE_COMMENTS: Record<string, Comment[]> = {
-  latte: [
-    {
-      id: "1",
-      phone: "+1234567890",
-      name: "Sarah",
-      text: "Best latte in town!",
-      rating: 5,
-      date: "2025-01-15",
-    },
-    {
-      id: "2",
-      phone: "+9876543210",
-      text: "Smooth and creamy, highly recommend",
-      rating: 5,
-      date: "2025-01-14",
-    },
-  ],
-  americano: [
-    {
-      id: "3",
-      phone: "+1122334455",
-      name: "John",
-      text: "Perfect strength, great taste",
-      rating: 4,
-      date: "2025-01-13",
-    },
-  ],
+  // Add your sample comments or fetch from an API
 };
 
 export default function ItemDetailClient({ item }: { item: MenuItem }) {
@@ -107,7 +80,6 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
       </Link>
 
       <div className="grid gap-8 md:grid-cols-2">
-        {/* Image */}
         <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
           <Image
             src={item.image || "/placeholder.png"}
@@ -118,13 +90,11 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
           />
         </div>
 
-        {/* Details */}
         <div className="space-y-4">
           <div>
             <h1 className="text-3xl font-bold">{item.name}</h1>
             <p className="text-muted-foreground mt-2">{item.description}</p>
           </div>
-
           {item.discount ? (
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -142,7 +112,6 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
               {formatTon(item.priceTon)} TON
             </div>
           )}
-
           <Button onClick={handleAddToCart} className="w-full md:w-auto">
             <Plus className="mr-2 h-4 w-4" />
             Add to Cart
@@ -150,14 +119,12 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
         </div>
       </div>
 
-      {/* Comments Section */}
       <div className="mt-12">
         <Card>
           <CardHeader>
             <CardTitle>Customer Reviews</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Comment Form */}
             <form onSubmit={handleSubmitComment} className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
@@ -211,7 +178,6 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
               <Button type="submit">Submit Review</Button>
             </form>
 
-            {/* Comments List */}
             <div className="space-y-4">
               {comments.length === 0 ? (
                 <p className="text-muted-foreground">No reviews yet. Be the first!</p>
