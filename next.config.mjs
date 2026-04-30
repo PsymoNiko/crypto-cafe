@@ -1,20 +1,13 @@
-const isGithubPages = process.env.GITHUB_PAGES === 'true';
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true,
-  },
-  basePath: isGithubPages ? '/nomad' : '',
-  assetPrefix: isGithubPages ? '/nomad' : '',
-  // Optional: Ignore build errors if TypeScript/ESLint are problematic
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-};
+const isExport = process.env.NEXT_EXPORT === 'true'
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-export default nextConfig;
+const nextConfig = {
+  output: isExport ? 'export' : 'standalone',
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+  images: { unoptimized: true },
+  ...(basePath ? { basePath, assetPrefix: basePath } : {}),
+}
+
+export default nextConfig
