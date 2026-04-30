@@ -20,7 +20,7 @@ const nextConfig = {
     unoptimized: true,
   },
   basePath: isGithubPages ? '/crypto-cafe' : '',
-  assetPrefix: isGithubPages ? '/life-planner' : '',
+  assetPrefix: isGithubPages ? '/crypto-cafe' : '',
   // Optional: Ignore build errors if TypeScript/ESLint are problematic
   typescript: {
     ignoreBuildErrors: true,
