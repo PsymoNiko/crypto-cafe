@@ -24,7 +24,7 @@ jobs:
       - run: pnpm install
       - run: |
           echo "NEXT_EXPORT=true" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_BASE_PATH=/mediamtx-dashboard" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_BASE_PATH=/crypto-cafe" >> $GITHUB_ENV
         shell: bash
       - run: pnpm run build
       - run: touch out/.nojekyll
