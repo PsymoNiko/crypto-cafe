@@ -11,7 +11,7 @@ export type CartItem = {
 }
 
 type CartState = {
-  names: CartItem[]
+  name: CartItem[]
 }
 
 type CartContextValue = {
