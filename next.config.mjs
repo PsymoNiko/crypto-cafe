@@ -1,33 +1,6 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   typescript: {
-//     ignoreBuildErrors: true,
-//   },
-//   images: {
-//     unoptimized: true,
-//   },
-// }
-
-// export default nextConfig
-
-
-const isGithubPages = process.env.GITHUB_PAGES === 'true';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  images: {
-    unoptimized: true,
-  },
-  basePath: isGithubPages ? '/crypto-cafe' : '',
-  assetPrefix: isGithubPages ? '/crypto-cafe' : '',
-  // Optional: Ignore build errors if TypeScript/ESLint are problematic
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  basePath: '/crypto-cafe',  // because your GitHub Pages repo name is "crypto-cafe"
+  images: { unoptimized: true },
 };
-
-export default nextConfig;
