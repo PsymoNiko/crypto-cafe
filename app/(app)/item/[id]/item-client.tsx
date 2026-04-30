@@ -23,8 +23,35 @@ type Comment = {
   date: string;
 };
 
+// Sample comments – replace with your actual data source
 const SAMPLE_COMMENTS: Record<string, Comment[]> = {
-  // Add your sample comments or fetch from an API
+  latte: [
+    {
+      id: "1",
+      phone: "+1234567890",
+      name: "Sarah",
+      text: "Best latte in town!",
+      rating: 5,
+      date: "2025-01-15",
+    },
+    {
+      id: "2",
+      phone: "+9876543210",
+      text: "Smooth and creamy, highly recommend",
+      rating: 5,
+      date: "2025-01-14",
+    },
+  ],
+  americano: [
+    {
+      id: "3",
+      phone: "+1122334455",
+      name: "John",
+      text: "Perfect strength, great taste",
+      rating: 4,
+      date: "2025-01-13",
+    },
+  ],
 };
 
 export default function ItemDetailClient({ item }: { item: MenuItem }) {
@@ -42,12 +69,12 @@ export default function ItemDetailClient({ item }: { item: MenuItem }) {
     : item.priceTon;
 
   const handleAddToCart = () => {
+    // ✅ Correctly matches Omit<CartItem, "qty"> – id, name, priceTon, imageUrl are required/optional
     addItem({
       id: item.id,
       name: item.name,
       priceTon: discountedPrice,
-      quantity: 1,
-      image: item.image,
+      imageUrl: item.image,   // CartItem uses 'imageUrl', not 'image'
     });
   };
 
