@@ -1,13 +1,33 @@
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   typescript: {
+//     ignoreBuildErrors: true,
+//   },
+//   images: {
+//     unoptimized: true,
+//   },
+// }
+
+// export default nextConfig
+
+
+const isGithubPages = process.env.GITHUB_PAGES === 'true';
+
 /** @type {import('next').NextConfig} */
-const isExport = process.env.NEXT_EXPORT === 'true'
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
-
 const nextConfig = {
-  output: isExport ? 'export' : 'standalone',
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: true },
-  images: { unoptimized: true },
-  ...(basePath ? { basePath, assetPrefix: basePath } : {}),
-}
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
+  basePath: isGithubPages ? '/crypto-cafe' : '',
+  assetPrefix: isGithubPages ? '/life-planner' : '',
+  // Optional: Ignore build errors if TypeScript/ESLint are problematic
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
-export default nextConfig
+export default nextConfig;
