@@ -1,7 +1,7 @@
 import { SAMPLE_MENU } from "../../menu-data";
 import ItemDetailClient from "./item-client";
 
-// Generate static paths for all menu items
+// Pre‑generate static pages for every menu item
 export async function generateStaticParams() {
   return SAMPLE_MENU.map((item) => ({
     id: item.id,
