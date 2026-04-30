@@ -4,14 +4,14 @@ import * as React from "react"
 
 export type CartItem = {
   id: string
-  title: string
+  name: string
   priceTon: number // price in TON (decimal)
   imageUrl?: string
   qty: number
 }
 
 type CartState = {
-  items: CartItem[]
+  names: CartItem[]
 }
 
 type CartContextValue = {
