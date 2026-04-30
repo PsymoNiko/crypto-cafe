@@ -1,49 +1,59 @@
-"use client"
+import { Suspense } from "react";
 
-import * as React from "react"
-import { useParams } from "next/navigation"
-import { CheckCircle2, Clock, Loader2 } from 'lucide-react'
-
-export default function OrderStatusPage() {
-  const params = useParams<{ id: string }>()
-  // Simulated status progression
-  const [status, setStatus] = React.useState<"created" | "pending" | "paid">("created")
-
-  React.useEffect(() => {
-    const timers = [
-      setTimeout(() => setStatus("pending"), 1200),
-      setTimeout(() => setStatus("paid"), 3000),
-    ]
-    return () => timers.forEach(clearTimeout)
-  }, [])
-
-  return (
-    <main className="mx-auto max-w-2xl">
-      <h2 className="text-xl font-semibold">Order #{params.id}</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        This page simulates status updates. Hook it to SSE or websockets for realtime.
-      </p>
-
-      <div className="mt-6 space-y-3">
-        <Step label="Created" active={true} done={status !== "created"} />
-        <Step label="Pending confirmation" active={status === "pending"} done={status === "paid"} />
-        <Step label="Paid" active={status === "paid"} done={status === "paid"} />
-      </div>
-    </main>
-  )
+// No static pre‑rendering – but the dynamic route is valid
+export async function generateStaticParams() {
+  return [];
 }
 
-function Step({ label, active, done }: { label: string; active: boolean; done: boolean }) {
+// Client component that will load order data
+async function OrderContent({ id }: { id: string }) {
+  // Example: load from localStorage (only on client)
+  const getOrder = () => {
+    if (typeof window === "undefined") return null;
+    const stored = localStorage.getItem(`order_${id}`);
+    return stored ? JSON.parse(stored) : null;
+  };
+
+  const order = getOrder();
+
+  if (!order) {
+    return (
+      <div className="container mx-auto py-8 text-center">
+        <h1 className="text-2xl font-bold">Order not found</h1>
+        <p className="text-muted-foreground mt-2">
+          Order ID: <code>{id}</code>
+        </p>
+        <a
+          href="/"
+          className="inline-block mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md"
+        >
+          Back to Menu
+        </a>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center gap-3 rounded border p-3">
-      {done ? (
-        <CheckCircle2 className="h-5 w-5 text-green-600" />
-      ) : active ? (
-        <Loader2 className="h-5 w-5 animate-spin text-primary" />
-      ) : (
-        <Clock className="h-5 w-5 text-muted-foreground" />
-      )}
-      <div className="text-sm">{label}</div>
+    <div className="container mx-auto py-8">
+      <div className="max-w-2xl mx-auto bg-card rounded-lg p-6 shadow-sm">
+        <h1 className="text-2xl font-bold mb-4">Order Confirmation</h1>
+        <p className="text-muted-foreground mb-4">Order ID: {id}</p>
+        {/* Render your order details here */}
+        <pre className="bg-muted p-4 rounded text-sm overflow-auto">
+          {JSON.stringify(order, null, 2)}
+        </pre>
+      </div>
     </div>
-  )
+  );
+}
+
+export default async function OrderPage(props: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await props.params;
+  return (
+    <Suspense fallback={<div className="container mx-auto py-8">Loading order...</div>}>
+      <OrderContent id={id} />
+    </Suspense>
+  );
 }
