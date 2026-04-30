@@ -1,6 +1,6 @@
 export type MenuItem = {
   id: string
-  title: string
+  name: string
   description: string
   priceTon: number
   imageUrl?: string
